@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="css/community.css">
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
     <script src="js/bootstrap.bundle.min.js" type="application/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -46,5 +47,43 @@
         </form>
     </div>
 </nav>
+
+
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-mid-12 col-sm-12 col-xs-12">
+            <h2><svg class="bi bi-file-plus" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 1H4a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V8h-1v5a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1h5V1z"/>
+                <path fill-rule="evenodd" d="M13.5 1a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-2a.5.5 0 010-1H13V1.5a.5.5 0 01.5-.5z" clip-rule="evenodd"/>
+                <path fill-rule="evenodd" d="M13 3.5a.5.5 0 01.5-.5h2a.5.5 0 010 1H14v1.5a.5.5 0 01-1 0v-2z" clip-rule="evenodd"/>
+            </svg>    Write an article</h2>
+            <hr>
+            <form action="">
+                <div class="form-group">
+                    <label for="title"><b>Title</b></label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Headline">
+                    <small id="emailHelp" class="form-text text-muted">Please add headline to your article</small>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1"><b>Textarea</b></label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="30"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="mark"><b>Add Marks</b></label>
+                    <input type="text" class="form-control" id="mark" name="mark" placeholder="Add marks">
+                    <small id="markHelp" class="form-text text-muted">Add the marks and separate the marks by space</small>
+                </div>
+                <button type="submit" class="btn btn-secondary btn-publish">Publish</button>
+            </form>
+        </div>
+        <div class="col-lg-3 col-mid-12 col-sm-12 col-xs-12">
+            <h3>Introduction</h3>
+            - Must have a title for your article and less than 25 words.<br>
+            - You can choose marks for your article and use the space to partition the marks.<br>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>
