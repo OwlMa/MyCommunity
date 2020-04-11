@@ -1,7 +1,14 @@
+
 .main {
     margin: 30px;
 }
 
 .btn-publish {
     float: right;
+}
+
+.text-desc {
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
 }
