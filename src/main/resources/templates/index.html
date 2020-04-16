@@ -60,7 +60,7 @@
             </svg>     Explore</h2>
             <hr>
 
-            <div class="media" th:each="articleDTO : ${articleDTOList}">
+            <div class="media" th:each="articleDTO : ${Articles}">
                 <img class="img-rounded" th:src="${articleDTO.user.avatarUrl}" alt="" style="width: 100px; height: 100px">
                 <div class="media-body">
                     <h4 class="mt-0" th:text="${articleDTO.title}"></h4>
@@ -69,6 +69,31 @@
                     <hr>
                 </div>
             </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" th:if="${currPage.isShowFirst()} == true">
+                        <a class="page-link" th:href="@{/(page=1)}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:if="${currPage.isShowPre()} == true">
+                        <a class="page-link" th:href="@{/(page=${currPage.getCurrPageNum()}-1)}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:each="page : ${pages}"><a class="page-link" th:href="@{/(page=${page})}" th:text="${page}">1</a></li>
+                    <li class="page-item" th:if="${currPage.isShowNext()} == true">
+                        <a class="page-link" th:href="@{/(page=${currPage.getCurrPageNum()}+1)}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:if="${currPage.isShowLast()} == true">
+                        <a class="page-link" th:href="@{/(page=${currPage.getPageNum()})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
         <div class="col-lg-3 col-mid-12 col-sm-12 col-xs-12">
             <h3>Trending</h3>
