@@ -22,4 +22,12 @@ public interface ArticleMapper {
     @Select("select count(1) from article")
     Integer count();
 
+    @Select("select count(1) from article where creator = #{id}")
+    Integer countByUserID(@Param(value = "id") Integer id);
+
+    @Select("select * from article where creator = #{id} limit #{offset}, #{size}")
+    List<Article> findByUserID(@Param(value = "id") Integer id, @Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
+
+    @Select("select * from article where id = #{id}")
+    Article getByID(@Param(value = "id") Integer id);
 }

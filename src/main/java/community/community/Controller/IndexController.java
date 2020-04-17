@@ -1,21 +1,13 @@
 package community.community.Controller;
 
 import community.community.Service.ArticleService;
-import community.community.dto.ArticleDTO;
 import community.community.dto.PageDTO;
-import community.community.mapper.ArticleMapper;
 import community.community.mapper.UserMapper;
-import community.community.model.Article;
-import community.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class IndexController {
@@ -26,20 +18,9 @@ public class IndexController {
     private ArticleService articleService;
 
     @GetMapping("/")
-    public String index(HttpServletRequest request,
-                        Model model,
+    public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
                         @RequestParam(name = "size", defaultValue = "5") Integer size) {
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie: cookies) {
-            if (cookie != null && cookie.getName().equals("token")) {
-                String token = cookie.getValue();
-                User user = userMapper.findByCookie(token);
-                if (user != null) {
-                    request.getSession().setAttribute("user", user);
-                }
-            }
-        }
 
         PageDTO pageDTO = articleService.list(page, size);
         model.addAttribute("currPage", pageDTO);
@@ -47,4 +28,5 @@ public class IndexController {
         model.addAttribute("Articles", pageDTO.getArticleDTOList());
         return "index";
     }
+
 }

@@ -12,3 +12,8 @@
     font-weight: normal;
     color: #999;
 }
+
+.profile .section{
+    float: left;
+    margin-top: 20px;
+}

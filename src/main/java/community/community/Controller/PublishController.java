@@ -33,18 +33,7 @@ public class PublishController {
                          @RequestParam("tags") String tags,
                          HttpServletRequest request,
                          Model model) {
-        User user = null;
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie: cookies) {
-            if (cookie != null && cookie.getName().equals("token")) {
-                String token = cookie.getValue();
-                user = userMapper.findByCookie(token);
-                if (user != null) {
-                    request.getSession().setAttribute("user", user);
-                    break;
-                }
-            }
-        }
+        User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login Please");
             return "publish";
