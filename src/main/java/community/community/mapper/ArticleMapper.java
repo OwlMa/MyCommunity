@@ -2,10 +2,7 @@ package community.community.mapper;
 
 import community.community.model.Article;
 import community.community.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,4 +27,7 @@ public interface ArticleMapper {
 
     @Select("select * from article where id = #{id}")
     Article getByID(@Param(value = "id") Integer id);
+
+    @Update("update article set title = #{title}, body = #{body}, tags = #{tags}, gmt_modified = #{gmtModified} where id = #{id}")
+    void updateByID(Article id);
 }

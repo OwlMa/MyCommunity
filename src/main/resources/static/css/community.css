@@ -7,6 +7,10 @@
     float: right;
 }
 
+.community-menu {
+    color: #999;
+}
+
 .text-desc {
     font-size: 12px;
     font-weight: normal;

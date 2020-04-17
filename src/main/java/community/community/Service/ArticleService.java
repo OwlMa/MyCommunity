@@ -67,4 +67,14 @@ public class ArticleService {
         articleDTO.setUser(user);
         return articleDTO;
     }
+
+    public void createOrUpdate(Article article) {
+        if (article.getId() == null) {
+            articleMapper.create(article);
+        }
+        else {
+            article.setGmtModified(System.currentTimeMillis());
+            articleMapper.updateByID(article);
+        }
+    }
 }
