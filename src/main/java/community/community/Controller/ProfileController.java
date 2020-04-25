@@ -32,15 +32,15 @@ public class ProfileController {
         if ("articles".equals(action)) {
             model.addAttribute("section", "articles");
             model.addAttribute("sectionName", "My Articles");
+            PageDTO pageDTO = articleService.list(user, page, size);
+            model.addAttribute("currPage", pageDTO);
+            model.addAttribute("pages", pageDTO.getPages());
+            model.addAttribute("Articles", pageDTO.getArticleDTOList());
         }
         else if ("comments".equals(action)) {
             model.addAttribute("section", "comments");
             model.addAttribute("sectionName", "Comments");
         }
-        PageDTO pageDTO = articleService.list(user, page, size);
-        model.addAttribute("currPage", pageDTO);
-        model.addAttribute("pages", pageDTO.getPages());
-        model.addAttribute("Articles", pageDTO.getArticleDTOList());
         return "profile";
     }
 }

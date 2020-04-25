@@ -74,7 +74,13 @@ public class ArticleService {
         }
         else {
             article.setGmtModified(System.currentTimeMillis());
-            articleMapper.updateByID(article);
+            articleMapper.update(article);
         }
+    }
+
+    public void incViewByID(Integer id) {
+        Article article = articleMapper.getByID(id);
+        article.setViewCount(article.getViewCount()+1);
+        articleMapper.update(article);
     }
 }

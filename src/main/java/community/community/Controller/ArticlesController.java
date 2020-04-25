@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class ArticlesController {
     @Autowired
-    private ArticleMapper articleMapper;
-    @Autowired
     private ArticleService articleService;
 
     @GetMapping("/articles/{id}")
     public String article(@PathVariable(name = "id") Integer id,
                           Model model) {
+        articleService.incViewByID(id);
         ArticleDTO articleDTO = articleService.getArticleDTOByID(id);
         model.addAttribute("articles", articleDTO);
         return "articles";
