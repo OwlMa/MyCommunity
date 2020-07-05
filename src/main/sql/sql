@@ -9,3 +9,19 @@ create table user
 	constraint user_pk
 		primary key (id)
 );
+
+create table article
+(
+	id int auto_increment,
+	title varchar(50) null,
+	body text null,
+	gmt_create bigint null,
+	gmt_modified bigint null,
+	creator int null,
+	comment_count int default 0 null,
+	view_count int default 0 null,
+	like_count int default 0 null,
+	tags varchar(256) null,
+	constraint article_pk
+		primary key (id)
+);

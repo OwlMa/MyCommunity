@@ -88,31 +88,20 @@ public class PageDTO {
             pages.add(1);
             return;
         }
-        else {
+        else if (count % size != 0) {
             pageNum++;
+            showNext = true;
         }
 
-        if (pageNum - page >= 2 && page > 2) {
-            for (int i = -2; i <=2; ++i) {
-                pages.add(page+i);
+        for (int i = size - 1; i >= 0; --i) {
+            int curr = currPageNum - i + size / 2;
+            if (curr > 0 && curr <= pageNum) {
+                pages.add(curr);
             }
         }
-        else if (page > 2) {
-            for (int i = Math.min(pageNum, 5)-1; i >= 0; --i) {
-                pages.add(pageNum-i);
-            }
-        }
-        else {
-            for (int i = 0; i < Math.min(pageNum, 5); ++i) {
-                pages.add(i+1);
-            }
-        }
-
         showPre = (page == 1) ? false : true;
         showNext = (page == pageNum ) ? false : true;
-        showFirst = pages.contains(1) ? false : true;
-        showLast = pages.contains(pageNum) ? false : true;
-
-
+        showFirst = (page > 1 ) ? true : false;
+        showLast = (page < pageNum) ? true : false;
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 @Mapper
 public interface ArticleMapper {
-    @Insert("insert into article(title, body, gmt_create, gmt_modified, creator, comment_count, view_count, like_count, tags) values(#{title}, #{body}, #{gmtCreate}, #{gmtModified}, #{creator}, #{commentCount}, #{viewCount}, #{likeCount}, #{tags})")
+    @Insert("insert into article(title, body, gmt_create, gmt_modified, creator, tags) values(#{title}, #{body}, #{gmtCreate}, #{gmtModified}, #{creator}, #{tags})")
     public void create(Article article);
 
     @Select("select * from article limit #{offset}, #{size}")

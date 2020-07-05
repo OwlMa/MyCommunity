@@ -24,35 +24,41 @@
             </svg>     <span th:text="${sectionName}"></span></h2>
             <hr>
             <div class="media" th:each="articleDTO : ${Articles}">
-                <img class="img-rounded" th:src="${articleDTO.user.avatarUrl}" alt="" style="width: 100px; height: 100px">
-                <div class="media-body">
-                    <h4 class="mt-0" th:text="${articleDTO.title}"></h4>
+                <img class="rounded-lg" th:src="${articleDTO.user.avatarUrl}" alt="" style="width: 100px; height: 100px">
+                <div class="media-body" style="margin-left: 20px">
+                    <h4 class="mt-0">
+                        <a th:href="@{'/articles/' + ${articleDTO.id}}" th:text="${articleDTO.title}"></a>
+                    </h4>
                     <span th:text="${articleDTO.body}"></span><br>
-                    <span class ="text-desc"><span th:text="${articleDTO.commentCount}"></span> comment · <span th:text="${articleDTO.viewCount}"></span> views · <span th:text="${#dates.format(articleDTO.gmtCreate, 'MM-dd-yyyy')}"></span> </span>
+                    <span class="text-desc"><span th:text="${articleDTO.commentCount}"></span> comment · <span th:text="${articleDTO.viewCount}"></span> views · <span th:text="${#dates.format(articleDTO.gmtCreate, 'MM-dd-yyyy')}"></span> </span>
                     <hr>
                 </div>
             </div>
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item" th:if="${currPage.isShowFirst()} == true">
-                        <a class="page-link" th:href="@{/profile/articles(page=1)}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
+                        <a class="page-link" th:href="@{/(page=1)}">
+                            <span aria-hidden="true">First</span>
                         </a>
                     </li>
                     <li class="page-item" th:if="${currPage.isShowPre()} == true">
-                        <a class="page-link" th:href="@{/profile/articles(page=${currPage.getCurrPageNum()}-1)}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
+                        <a class="page-link" th:href="@{/(page=${currPage.getCurrPageNum()}-1)}">
+                            <span aria-hidden="true">Prev</span>
                         </a>
                     </li>
-                    <li class="page-item" th:each="page : ${pages}"><a class="page-link" th:href="@{/profile/articles(page=${page})}" th:text="${page}">1</a></li>
+
+                    <li th:each="page : ${pages}" th:class="${page == currPage.getCurrPageNum()}? 'page-item active' : 'page-item'">
+                        <a class="page-link" th:href="@{/(page=${page})}" th:text="${page}"></a>
+                    </li>
+
                     <li class="page-item" th:if="${currPage.isShowNext()} == true">
-                        <a class="page-link" th:href="@{/profile/articles(page=${currPage.getCurrPageNum()}+1)}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
+                        <a class="page-link" th:href="@{/(page=${currPage.getCurrPageNum()}+1)}">
+                            <span aria-hidden="true">Next</span>
                         </a>
                     </li>
                     <li class="page-item" th:if="${currPage.isShowLast()} == true">
-                        <a class="page-link" th:href="@{/prfile/articles(page=${currPage.getPageNum()})}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
+                        <a class="page-link" th:href="@{/(page=${currPage.getPageNum()})}">
+                            <span aria-hidden="true">Last</span>
                         </a>
                     </li>
                 </ul>

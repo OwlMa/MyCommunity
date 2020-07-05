@@ -18,3 +18,8 @@ For the situation that when user is logging in but the server is somehow shutdow
 
 - We can set a token in the database and set this token into cookie of the client.
 - Through checking the value of token and database, the user can automatically login again.
+
+# Logout
+
+For logout, we remove the user from the session in the response, and set the token in the cookie to be null.
+Also need to remove the cookie by set the max age of the cookie to be 0 and replace the old cookie with this new one while response. 
