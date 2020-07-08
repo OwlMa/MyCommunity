@@ -2,6 +2,9 @@ package community.community.Service;
 
 import community.community.dto.ArticleDTO;
 import community.community.dto.PageDTO;
+import community.community.exception.ArticleExceptionCode;
+import community.community.exception.ErrorCode;
+import community.community.exception.MyException;
 import community.community.mapper.ArticleMapper;
 import community.community.mapper.UserMapper;
 import community.community.model.Article;
@@ -61,6 +64,9 @@ public class ArticleService {
 
     public ArticleDTO getArticleDTOByID(Integer id) {
         Article article = articleMapper.getByID(id);
+        if (article == null) {
+            throw new MyException(ArticleExceptionCode.ARTICLE_NOT_EXIST);
+        }
         ArticleDTO articleDTO = new ArticleDTO();
         BeanUtils.copyProperties(article, articleDTO);
         User user = userMapper.findById(article.getCreator());
@@ -80,6 +86,9 @@ public class ArticleService {
 
     public void incViewByID(Integer id) {
         Article article = articleMapper.getByID(id);
+        if (article == null) {
+            throw new MyException(ArticleExceptionCode.ARTICLE_NOT_EXIST);
+        }
         article.setViewCount(article.getViewCount()+1);
         articleMapper.update(article);
     }

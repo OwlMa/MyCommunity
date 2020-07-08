@@ -8,6 +8,15 @@ public class Comment {
     private Long gmtCreate;
     private Integer likeCount;
     private String content;
+    private Long gmtModified;
+
+    public Long getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Long gmtModified) {
+        this.gmtModified = gmtModified;
+    }
 
     public Integer getId() {
         return id;

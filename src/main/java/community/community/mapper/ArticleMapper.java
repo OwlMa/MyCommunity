@@ -28,6 +28,6 @@ public interface ArticleMapper {
     @Select("select * from article where id = #{id}")
     Article getByID(@Param(value = "id") Integer id);
 
-    @Update("update article set title = #{title}, body = #{body}, tags = #{tags}, gmt_modified = #{gmtModified}, view_count = #{viewCount} where id = #{id}")
+    @Update("update article set title = #{title}, body = #{body}, tags = #{tags}, gmt_modified = #{gmtModified}, view_count = #{viewCount}, comment_count = #{commentCount} where id = #{id}")
     void update(Article article);
 }
