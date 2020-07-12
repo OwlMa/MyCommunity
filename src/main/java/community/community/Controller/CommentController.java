@@ -3,6 +3,7 @@ package community.community.Controller;
 import community.community.Service.CommentService;
 import community.community.dto.CommentDTO;
 import community.community.dto.ResultDTO;
+import community.community.enums.CommentTypeEnum;
 import community.community.exception.CommentExceptionCode;
 import community.community.mapper.CommentMapper;
 import community.community.model.Comment;
@@ -28,6 +29,9 @@ public class CommentController {
         if (user == null) {
             return ResultDTO.errorOf(CommentExceptionCode.NOT_LOGIN);
         }
+        if (commentDTO.getContent() == "") {
+            return ResultDTO.errorOf(CommentExceptionCode.COMMENT_INVALID);
+        }
         Comment comment = new Comment();
         BeanUtils.copyProperties(commentDTO, comment);
         comment.setCommentator(8);
@@ -36,6 +40,7 @@ public class CommentController {
         comment.setCommentator(1);
         commentService.insert(comment);
         Map<Object, Object> objectMap = new HashMap<>();
+        objectMap.put("code", 200);
         objectMap.put("message", "success!");
         return objectMap;
     }

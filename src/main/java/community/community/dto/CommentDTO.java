@@ -1,5 +1,7 @@
 package community.community.dto;
 
+import community.community.model.User;
+
 public class CommentDTO {
     private Integer id;
     private Integer parentId;
@@ -9,6 +11,15 @@ public class CommentDTO {
     private Integer likeCount;
     private String content;
     private Long gmtModified;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getGmtModified() {
         return gmtModified;

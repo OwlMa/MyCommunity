@@ -22,6 +22,16 @@
     margin-top: 20px;
 }
 
-.div.media-body {
+.media-body {
     margin-left: 20px;
+}
+
+.menu-icon {
+    color: #4e555b;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.menu-icon .icon:hover {
+    color: steelblue;
 }

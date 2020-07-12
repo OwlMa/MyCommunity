@@ -1,17 +1,22 @@
 package community.community.Service;
 
+import community.community.dto.CommentDTO;
 import community.community.enums.CommentTypeEnum;
 import community.community.exception.ArticleExceptionCode;
 import community.community.exception.CommentExceptionCode;
-import community.community.exception.ErrorCode;
 import community.community.exception.MyException;
 import community.community.mapper.ArticleMapper;
 import community.community.mapper.CommentMapper;
+import community.community.mapper.UserMapper;
 import community.community.model.Article;
 import community.community.model.Comment;
+import community.community.model.User;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 @Service
 public class CommentService {
@@ -19,6 +24,8 @@ public class CommentService {
     private CommentMapper commentMapper;
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private UserMapper userMapper;
     @Transactional
     public void insert(Comment comment) {
         if (comment.getParentId() == null || comment.getParentId() == 0) {
@@ -45,5 +52,27 @@ public class CommentService {
             }
             commentMapper.insert(comment);
         }
+    }
+
+    public List<CommentDTO> listById(Integer id, Integer type) {
+        List<CommentDTO> commentDTOS = new LinkedList<>();
+        List<Comment> comments = commentMapper.listById(id, type);
+        Map<Integer, User> commentator = new HashMap<>();
+        for (Comment comment: comments) {
+            User user = null;
+            if (!commentator.containsKey(comment.getCommentator())) {
+                user = userMapper.findById(comment.getCommentator());
+                commentator.put(comment.getCommentator(), user);
+            }
+            else {
+                user = commentator.get(comment.getCommentator());
+            }
+            CommentDTO commentDTO = new CommentDTO();
+            BeanUtils.copyProperties(comment,commentDTO);
+            commentDTO.setUser(user);
+            commentDTO.setGmtModified(System.currentTimeMillis());
+            commentDTOS.add(commentDTO);
+        }
+        return commentDTOS;
     }
 }

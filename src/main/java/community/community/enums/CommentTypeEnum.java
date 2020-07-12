@@ -2,7 +2,8 @@ package community.community.enums;
 
 public enum CommentTypeEnum {
     ARTICLE(1),
-    COMMENT(2);
+    COMMENT(2),
+    SUCCESS(200);
     //SUCCESS(3);
     private Integer code;
 
