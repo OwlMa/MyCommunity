@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -24,7 +25,7 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
-    public Object post(@RequestBody CommentDTO commentDTO, HttpServletRequest request) {
+    public ResultDTO post(@RequestBody CommentDTO commentDTO, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return ResultDTO.errorOf(CommentExceptionCode.NOT_LOGIN);
@@ -39,9 +40,17 @@ public class CommentController {
         comment.setGmtModified(System.currentTimeMillis());
         comment.setCommentator(1);
         commentService.insert(comment);
-        Map<Object, Object> objectMap = new HashMap<>();
-        objectMap.put("code", 200);
-        objectMap.put("message", "success!");
-        return objectMap;
+        return ResultDTO.success();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
+    public ResultDTO subComments(@PathVariable(name = "id") Integer id, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return ResultDTO.errorOf(CommentExceptionCode.NOT_LOGIN);
+        }
+        List<CommentDTO> commentDTOS = commentService.listById(id, CommentTypeEnum.COMMENT.getCode());
+        return ResultDTO.success(commentDTOS);
     }
 }

@@ -31,7 +31,20 @@
     margin-right: 20px;
     cursor: pointer;
 }
+.menu-icon .active {
+    color: #005cbf;
+}
 
 .menu-icon .icon:hover {
     color: steelblue;
+}
+
+.sub-comment {
+    border-radius: 5px;
+    border: 1px solid #eee;
+    margin: 10px;
+    padding-top: 10px;
+}
+.sub-comment-textarea {
+    margin: 10px;
 }
