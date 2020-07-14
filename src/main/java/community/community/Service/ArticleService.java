@@ -3,7 +3,6 @@ package community.community.Service;
 import community.community.dto.ArticleDTO;
 import community.community.dto.PageDTO;
 import community.community.exception.ArticleExceptionCode;
-import community.community.exception.ErrorCode;
 import community.community.exception.MyException;
 import community.community.mapper.ArticleMapper;
 import community.community.mapper.UserMapper;
@@ -12,6 +11,7 @@ import community.community.model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,8 @@ public class ArticleService {
     private UserMapper userMapper;
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private TagService tagService;
 
     public PageDTO list(Integer page, Integer size) {
         Integer offset = size * (page - 1);
@@ -74,9 +76,12 @@ public class ArticleService {
         return articleDTO;
     }
 
+    @Transactional
     public void createOrUpdate(Article article) {
         if (article.getId() == null) {
             articleMapper.create(article);
+            Integer id = articleMapper.selectLastInsertId();
+            tagService.createOrUpdate(article.getTags(), id);
         }
         else {
             article.setGmtModified(System.currentTimeMillis());
@@ -91,5 +96,16 @@ public class ArticleService {
         }
         article.setViewCount(article.getViewCount()+1);
         articleMapper.update(article);
+    }
+
+    public List<Article> selectRelated(String[] tags, Integer id) {
+        StringBuffer sb = new StringBuffer();
+        for (String tag: tags) {
+            sb.append(tag);
+            sb.append("|");
+        }
+        sb.deleteCharAt(sb.length()-1);
+        List<Article> relatedArticles = articleMapper.selectRelated(sb.toString(), id);
+        return relatedArticles;
     }
 }

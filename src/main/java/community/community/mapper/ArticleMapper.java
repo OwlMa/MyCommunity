@@ -1,5 +1,6 @@
 package community.community.mapper;
 
+import community.community.dto.ArticleDTO;
 import community.community.model.Article;
 import community.community.model.User;
 import org.apache.ibatis.annotations.*;
@@ -30,4 +31,10 @@ public interface ArticleMapper {
 
     @Update("update article set title = #{title}, body = #{body}, tags = #{tags}, gmt_modified = #{gmtModified}, view_count = #{viewCount}, comment_count = #{commentCount} where id = #{id}")
     void update(Article article);
+
+    @Select("select last_insert_id()")
+    Integer selectLastInsertId();
+
+    @Select("select * from article where tags regexp #{regex} and id != #{id}")
+    List<Article> selectRelated(String regex, Integer id);
 }

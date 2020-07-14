@@ -48,3 +48,16 @@
 .sub-comment-textarea {
     margin: 10px;
 }
+
+.community-media {
+    padding-bottom: 5px;
+}
+
+.community-img {
+    width: 50px;
+    height: 50px;
+}
+
+.tags {
+    margin-right: 10px;
+}

@@ -2,8 +2,6 @@ package community.community.Controller;
 
 import community.community.Service.ArticleService;
 import community.community.dto.ArticleDTO;
-import community.community.mapper.ArticleMapper;
-import community.community.mapper.UserMapper;
 import community.community.model.Article;
 import community.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,6 @@ public class PublishController {
 
     @GetMapping("/publish")
     public String publish() {
-
         return "publish";
     }
 
@@ -49,8 +46,6 @@ public class PublishController {
         article.setGmtModified(System.currentTimeMillis());
         article.setId(id);
         articleService.createOrUpdate(article);
-
-
         return "redirect:/";
     }
 
