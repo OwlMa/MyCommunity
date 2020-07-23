@@ -2,14 +2,18 @@ package community.community.Service;
 
 import community.community.dto.CommentDTO;
 import community.community.enums.CommentTypeEnum;
+import community.community.enums.MessageStatusEnum;
+import community.community.enums.MessageTypeEnum;
 import community.community.exception.ArticleExceptionCode;
 import community.community.exception.CommentExceptionCode;
 import community.community.exception.MyException;
 import community.community.mapper.ArticleMapper;
 import community.community.mapper.CommentMapper;
+import community.community.mapper.MessageMapper;
 import community.community.mapper.UserMapper;
 import community.community.model.Article;
 import community.community.model.Comment;
+import community.community.model.Message;
 import community.community.model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,8 @@ public class CommentService {
     private ArticleMapper articleMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private MessageMapper messageMapper;
     @Transactional
     public void insert(Comment comment) {
         if (comment.getParentId() == null || comment.getParentId() == 0) {
@@ -41,17 +47,31 @@ public class CommentService {
                 throw new MyException(ArticleExceptionCode.ARTICLE_NOT_EXIST);
             }
             commentMapper.insert(comment);
+            //send the message to the author
+            createMessage(comment.getCommentator(), article.getCreator(), article.getId(), MessageTypeEnum.REPLY_ARTICLE);
+
             article.setCommentCount(article.getCommentCount()+1);
             articleMapper.update(article);
         } else {
             //for the secondary comment
             Comment dbComment = commentMapper.selectByID(comment.getParentId());
-            System.out.println(dbComment);
             if (dbComment == null) {
                 throw new MyException(CommentExceptionCode.COMMENT_NOT_FOUND);
             }
+            createMessage(comment.getCommentator(), dbComment.getCommentator(), dbComment.getId(), MessageTypeEnum.REPLY_COMMENT);
             commentMapper.insert(comment);
         }
+    }
+
+    private void createMessage(Integer sender, Integer receiver, Integer outer_id, MessageTypeEnum messageTypeEnum) {
+        Message message = new Message();
+        message.setSender(sender);
+        message.setReceiver(receiver);
+        message.setOuter_id(outer_id);
+        message.setType(messageTypeEnum.getStatus());
+        message.setStatus(MessageStatusEnum.UNREAD.getCode());
+        message.setGmtCreate(System.currentTimeMillis());
+        messageMapper.insert(message);
     }
 
     public List<CommentDTO> listById(Integer id, Integer type) {

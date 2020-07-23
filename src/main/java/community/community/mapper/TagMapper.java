@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface TagMapper {
@@ -21,4 +23,10 @@ public interface TagMapper {
 
     @Select("select count(1) from tags where name = #{name}")
     Integer countByName(String name);
+
+    @Select("select * from tags")
+    List<Tag> getAll();
+
+    @Select("select * from tags where id = #{id}")
+    Tag getByTagId(Integer id);
 }

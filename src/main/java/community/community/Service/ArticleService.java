@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -63,6 +64,32 @@ public class ArticleService {
         pageDTO.setPage(count, page, size);
         return pageDTO;
     }
+
+    public PageDTO list(Integer id, Integer page, Integer size) {
+        List<ArticleDTO> articleDTOList = new ArrayList<>();
+        PageDTO pageDTO = new PageDTO();
+        List<Integer> articleIdList = tagService.getArticlesID(id);
+        int lower = size * (page - 1);
+        int upper = size * page;
+        int countArticles = 0;
+        for (Integer articleID: articleIdList) {
+            countArticles++;
+            if (countArticles <= lower || countArticles > upper) {
+                continue;
+            }
+            Article article = articleMapper.getByID(articleID);
+            ArticleDTO articleDTO = new ArticleDTO();
+            BeanUtils.copyProperties(article, articleDTO);
+            User user = userMapper.findById(article.getCreator());
+            articleDTO.setUser(user);
+            articleDTOList.add(articleDTO);
+        }
+        pageDTO.setArticleDTOList(articleDTOList);
+        Integer count  = tagService.countById(id);
+        pageDTO.setPage(count, page, size);
+        return pageDTO;
+    }
+
 
     public ArticleDTO getArticleDTOByID(Integer id) {
         Article article = articleMapper.getByID(id);

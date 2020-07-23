@@ -23,7 +23,8 @@
                 <path fill-rule="evenodd" d="M11 15V4h1v11h-1zm4.5-11H.5V3h15v1zM3 6.5a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5zm0 3a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5zm0 3a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5z" clip-rule="evenodd"/>
             </svg>     <span th:text="${sectionName}"></span></h2>
             <hr>
-            <div class="media" th:each="articleDTO : ${Articles}">
+            <div class="col-lg-12 col-mid-12 col-sm-12 col-xs-12" th:if="${section == 'articles'}">
+                <div class="media" th:each="articleDTO : ${Articles}">
                 <img class="rounded-lg" th:src="${articleDTO.user.avatarUrl}" alt="" style="width: 100px; height: 100px">
                 <div class="media-body" style="margin-left: 20px">
                     <h4 class="mt-0">
@@ -34,7 +35,7 @@
                     <hr>
                 </div>
             </div>
-            <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item" th:if="${currPage.isShowFirst()} == true">
                         <a class="page-link" th:href="@{/(page=1)}">
@@ -63,11 +64,15 @@
                     </li>
                 </ul>
             </nav>
+            </div>
+            <div class="col-lg-12 col-mid-12 col-sm-12 col-xs-12" th:if="${section == 'comments'}">
+                comments
+            </div>
         </div>
         <div class="col-lg-3 col-mid-12 col-sm-12 col-xs-12">
             <div class="list-group section" style="float: left; margin-top: 20px">
                 <a href="/profile/articles" th:class="${section == 'articles'}? 'active list-group-item list-group-item-action ' : 'list-group-item list-group-item-action '">My Articles</a>
-                <a href="/profile/comments" th:class="${section == 'comments'}? 'active list-group-item list-group-item-action ' : 'list-group-item list-group-item-action '">Comments<span class="badge badge-primary badge-pill" style="float: right">14</span></a>
+                <a href="/profile/comments" th:class="${section == 'comments'}? 'active list-group-item list-group-item-action ' : 'list-group-item list-group-item-action '">Comments<span class="badge badge-primary badge-pill" th:text="${unreadCount}" style="float: right">14</span></a>
                 <a href="#" class="list-group-item list-group-item-action">Comments</a>
                 <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
                 <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Vestibulum at eros</a>

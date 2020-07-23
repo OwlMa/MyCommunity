@@ -26,6 +26,7 @@ public class IndexController {
         model.addAttribute("currPage", pageDTO);
         model.addAttribute("pages", pageDTO.getPages());
         model.addAttribute("Articles", pageDTO.getArticleDTOList());
+        model.addAttribute("label", null);
         return "index";
     }
 
