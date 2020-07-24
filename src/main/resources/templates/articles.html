@@ -7,9 +7,13 @@
     <link rel="stylesheet" href="/css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="/css/bootstrap-reboot.min.css">
     <link rel="stylesheet" type="text/css" href="/css/community.css">
+    <link rel="stylesheet" type="text/css" href="/css/editormd.preview.css">
     <script src="/js/jquery-3.5.1.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.bundle.min.js" type="application/javascript"></script>
+    <script src="/js/editormd.js" type="application/javascript"></script>
+    <script src="/js/lib/marked.min.js" type="application/javascript"></script>
+    <script src="/js/lib/prettify.min.js" type="application/javascript"></script>
     <script src="/js/community.js" type="application/javascript"></script>
 </head>
 <body>
@@ -36,13 +40,24 @@
                 <span class="badge badge-pill badge-secondary tags" th:each="tag: ${tags}" th:text="${tag}">Secondary</span>
                 <hr>
             </div>
-            <div class="col-lg-9 col-mid-12 col-sm-12 col-xs-12">
-                <a class="text-left" th:text="${articles.body}"></a>
+<!--            article body-->
+            <div class="col-lg-9 col-mid-12 col-sm-12 col-xs-12" id="test-markdown-view">
+<!--                <a class="text-left" th:text="${articles.body}"></a>-->
+                <textarea th:text="${articles.body}" style="display:none;">### Hello world!</textarea>
             </div>
+            <script type="text/javascript">
+                $(function() {
+                    var testView = editormd.markdownToHTML("test-markdown-view", {
+                        // markdown : "[TOC]\n### Hello world!\n## Heading 2", // Also, you can dynamic set Markdown text
+                        // htmlDecode : true,  // Enable / disable HTML tag encode.
+                        // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
+                    });
+                });
+            </script>
             <hr>
 <!--            comment-->
             <h4>
-                <span th:text="${articles.commentCount}"></span>Comments
+                <span th:text="${articles.commentCount}"></span> Comments
             </h4>
             <div class="col-lg-9 col-mid-12 col-sm-12 col-xs-12" th:each="comment: ${comments}">
                 <div th:class="media" style="padding-bottom: 5px">

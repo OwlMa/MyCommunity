@@ -2,6 +2,7 @@ package community.community.Controller;
 
 import community.community.Service.ArticleService;
 import community.community.Service.TagService;
+import community.community.dto.ArticleDTO;
 import community.community.dto.PageDTO;
 import community.community.dto.TagDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,11 @@ public class TagsController {
     public String tag(@PathVariable(name = "id") Integer id, Model model,
                       @RequestParam(name = "page", defaultValue = "1") Integer page,
                       @RequestParam(name = "size", defaultValue = "5") Integer size) {
-        PageDTO pageDTO = articleService.list(id, page, size);
+        PageDTO<ArticleDTO> pageDTO = articleService.list(id, page, size);
         String label = tagService.getNameById(id);
         model.addAttribute("currPage", pageDTO);
         model.addAttribute("pages", pageDTO.getPages());
-        model.addAttribute("Articles", pageDTO.getArticleDTOList());
+        model.addAttribute("Articles", pageDTO.getDTOList());
         model.addAttribute("label", label);
         model.addAttribute("labelID", id);
         return "index";

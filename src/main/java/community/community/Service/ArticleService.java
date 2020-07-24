@@ -27,10 +27,10 @@ public class ArticleService {
     @Autowired
     private TagService tagService;
 
-    public PageDTO list(Integer page, Integer size) {
+    public PageDTO<ArticleDTO> list(Integer page, Integer size) {
         Integer offset = size * (page - 1);
         List<ArticleDTO> articleDTOList = new ArrayList<>();
-        PageDTO pageDTO = new PageDTO();
+        PageDTO<ArticleDTO> pageDTO = new PageDTO<>();
         List<Article> articleList = articleMapper.list(offset, size);
         for (Article article: articleList) {
             User user = userMapper.findById(article.getCreator());
@@ -39,7 +39,7 @@ public class ArticleService {
             articleDTO.setUser(user);
             articleDTOList.add(articleDTO);
         }
-        pageDTO.setArticleDTOList(articleDTOList);
+        pageDTO.setDTOList(articleDTOList);
         Integer count  = articleMapper.count();
         pageDTO.setPage(count, page, size);
 
@@ -47,10 +47,10 @@ public class ArticleService {
         return pageDTO;
     }
 
-    public PageDTO list(User user, Integer page, Integer size) {
+    public PageDTO<ArticleDTO> list(User user, Integer page, Integer size) {
         Integer offset = size * (page - 1);
         List<ArticleDTO> articleDTOList = new ArrayList<>();
-        PageDTO pageDTO = new PageDTO();
+        PageDTO<ArticleDTO> pageDTO = new PageDTO<>();
         List<Article> articleList = articleMapper.findByUserID(user.getId(), offset, size);
         for (Article article: articleList) {
             //User user = userMapper.findById(article.getCreator());
@@ -59,7 +59,7 @@ public class ArticleService {
             articleDTO.setUser(user);
             articleDTOList.add(articleDTO);
         }
-        pageDTO.setArticleDTOList(articleDTOList);
+        pageDTO.setDTOList(articleDTOList);
         Integer count  = articleMapper.countByUserID(user.getId());
         pageDTO.setPage(count, page, size);
         return pageDTO;
@@ -67,7 +67,7 @@ public class ArticleService {
 
     public PageDTO list(Integer id, Integer page, Integer size) {
         List<ArticleDTO> articleDTOList = new ArrayList<>();
-        PageDTO pageDTO = new PageDTO();
+        PageDTO<ArticleDTO> pageDTO = new PageDTO<>();
         List<Integer> articleIdList = tagService.getArticlesID(id);
         int lower = size * (page - 1);
         int upper = size * page;
@@ -84,7 +84,7 @@ public class ArticleService {
             articleDTO.setUser(user);
             articleDTOList.add(articleDTO);
         }
-        pageDTO.setArticleDTOList(articleDTOList);
+        pageDTO.setDTOList(articleDTOList);
         Integer count  = tagService.countById(id);
         pageDTO.setPage(count, page, size);
         return pageDTO;

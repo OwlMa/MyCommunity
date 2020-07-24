@@ -67,7 +67,7 @@ public class CommentService {
         Message message = new Message();
         message.setSender(sender);
         message.setReceiver(receiver);
-        message.setOuter_id(outer_id);
+        message.setOuterId(outer_id);
         message.setType(messageTypeEnum.getStatus());
         message.setStatus(MessageStatusEnum.UNREAD.getCode());
         message.setGmtCreate(System.currentTimeMillis());

@@ -1,5 +1,6 @@
 package community.community.interceptor;
 
+import community.community.Service.MessageService;
 import community.community.mapper.UserMapper;
 import community.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 public class SessionInterceptor implements HandlerInterceptor {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private MessageService messageService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -29,6 +32,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                 User user = userMapper.findByCookie(token);
                 if (user != null) {
                     request.getSession().setAttribute("user", user);
+                    Integer unreadCount = messageService.getUnreadCountByUser(user.getId());
+                    request.getSession().setAttribute("unreadCount", unreadCount);
                 }
             }
         }

@@ -4,7 +4,7 @@ public class Message {
     private Integer id;
     private Integer sender;
     private Integer receiver;
-    private Integer outer_id;
+    private Integer outerId;
     private Integer type;
     private Long gmtCreate;
     private Integer status;
@@ -33,12 +33,12 @@ public class Message {
         this.receiver = receiver;
     }
 
-    public Integer getOuter_id() {
-        return outer_id;
+    public Integer getOuterId() {
+        return outerId;
     }
 
-    public void setOuter_id(Integer outer_id) {
-        this.outer_id = outer_id;
+    public void setOuterId(Integer outerId) {
+        this.outerId = outerId;
     }
 
     public Integer getType() {

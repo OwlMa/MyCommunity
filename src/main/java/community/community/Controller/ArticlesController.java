@@ -5,7 +5,6 @@ import community.community.Service.CommentService;
 import community.community.dto.ArticleDTO;
 import community.community.dto.CommentDTO;
 import community.community.enums.CommentTypeEnum;
-import community.community.mapper.ArticleMapper;
 import community.community.model.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

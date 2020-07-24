@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper {
     @Insert("insert into article(title, body, gmt_create, gmt_modified, creator, tags) values(#{title}, #{body}, #{gmtCreate}, #{gmtModified}, #{creator}, #{tags})")
-    public void create(Article article);
+    void create(Article article);
 
     @Select("select * from article limit #{offset}, #{size}")
     List<Article> list(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);

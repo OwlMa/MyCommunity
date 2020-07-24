@@ -1,6 +1,7 @@
 package community.community.Controller;
 
 import community.community.Service.ArticleService;
+import community.community.dto.ArticleDTO;
 import community.community.dto.PageDTO;
 import community.community.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,10 @@ public class IndexController {
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
                         @RequestParam(name = "size", defaultValue = "5") Integer size) {
 
-        PageDTO pageDTO = articleService.list(page, size);
+        PageDTO<ArticleDTO> pageDTO = articleService.list(page, size);
         model.addAttribute("currPage", pageDTO);
         model.addAttribute("pages", pageDTO.getPages());
-        model.addAttribute("Articles", pageDTO.getArticleDTOList());
+        model.addAttribute("Articles", pageDTO.getDTOList());
         model.addAttribute("label", null);
         return "index";
     }

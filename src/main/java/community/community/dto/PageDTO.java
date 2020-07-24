@@ -3,8 +3,8 @@ package community.community.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageDTO {
-    private List<ArticleDTO> articleDTOList;
+public class PageDTO<T> {
+    private List<T> DTOList;
     private boolean showPre;
     private boolean showFirst;
     private boolean showLast;
@@ -13,8 +13,12 @@ public class PageDTO {
     private Integer currPageNum;
     private List<Integer> pages = new ArrayList<>();
 
-    public List<ArticleDTO> getArticleDTOList() {
-        return this.articleDTOList;
+    public List<T> getDTOList() {
+        return DTOList;
+    }
+
+    public void setDTOList(List<T> DTOList) {
+        this.DTOList = DTOList;
     }
 
     public List<Integer> getPages() {
@@ -23,10 +27,6 @@ public class PageDTO {
 
     public void setPages(List<Integer> pages) {
         this.pages = pages;
-    }
-
-    public void setArticleDTOList(List<ArticleDTO> articleDTOList) {
-        this.articleDTOList = articleDTOList;
     }
 
     public boolean isShowPre() {
