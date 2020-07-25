@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Owl Community</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="/css/bootstrap-reboot.min.css">
@@ -10,8 +10,12 @@
     <link rel="stylesheet" href="/css/community.css">
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.bundle.min.js" type="application/javascript"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
     <script src="/js/editormd.min.js" type="application/javascript"></script>
 </head>
 <body>
@@ -19,42 +23,55 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-mid-12 col-sm-12 col-xs-12">
-            <h2><svg class="bi bi-file-plus" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 1H4a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V8h-1v5a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1h5V1z"/>
-                <path fill-rule="evenodd" d="M13.5 1a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-2a.5.5 0 010-1H13V1.5a.5.5 0 01.5-.5z" clip-rule="evenodd"/>
-                <path fill-rule="evenodd" d="M13 3.5a.5.5 0 01.5-.5h2a.5.5 0 010 1H14v1.5a.5.5 0 01-1 0v-2z" clip-rule="evenodd"/>
-            </svg>    Write an article</h2>
+            <h2>
+                <svg class="bi bi-file-plus" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 1H4a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V8h-1v5a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1h5V1z"/>
+                    <path fill-rule="evenodd"
+                          d="M13.5 1a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-2a.5.5 0 010-1H13V1.5a.5.5 0 01.5-.5z"
+                          clip-rule="evenodd"/>
+                    <path fill-rule="evenodd" d="M13 3.5a.5.5 0 01.5-.5h2a.5.5 0 010 1H14v1.5a.5.5 0 01-1 0v-2z"
+                          clip-rule="evenodd"/>
+                </svg>
+                Write an article
+            </h2>
             <hr>
             <form action="/publish" method="post">
                 <input type="hidden" name="id" th:value="${id}">
                 <div class="form-group">
                     <label for="title"><b>Title</b></label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Headline" th:value="${title}">
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Headline"
+                           th:value="${title}">
                     <small id="emailHelp" class="form-text text-muted">Please add headline to your article</small>
                 </div>
                 <div class="form-group" id="editor">
                     <label for="body"><b>Textarea</b></label>
                     <textarea class="form-control" th:text="${body}" id="body" name="body" rows="30"></textarea>
                     <script type="text/javascript">
-                        $(function() {
+                        $(function () {
                             var editor = editormd("editor", {
                                 width: "100%",
                                 height: 350,
                                 // markdown: "xxxx",     // dynamic set Markdown text
-                                path : "/js/lib/",  // Autoload modules mode, codemirror, marked... dependents libs path
+                                path: "/js/lib/",  // Autoload modules mode, codemirror, marked... dependents libs path
                                 delay: 0,
-                                placeholder: "place input"
+                                placeholder: "place input",
+                                imageUpload    : true,
+                                imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                                imageUploadURL : "/file/upload"
                             });
                         });
                     </script>
                 </div>
                 <div class="form-group">
                     <label for="tags"><b>Add Marks</b></label>
-                    <input type="text" class="form-control" th:value="${tags}" id="tags" name="tags" placeholder="Add marks" autocomplete="off">
+                    <input type="text" class="form-control" th:value="${tags}" id="tags" name="tags"
+                           placeholder="Add marks" autocomplete="off">
                     <div>
                         <span class="badge badge-pill badge-secondary tags">Secondary</span>
                     </div>
-                    <small id="markHelp" class="form-text text-muted">Add the marks and separate the marks by comma</small>
+                    <small id="markHelp" class="form-text text-muted">Add the marks and separate the marks by
+                        comma</small>
                 </div>
                 <li th:if="${error != null}" th:text="${error}" style="color: red"></li>
                 <button type="submit" class="btn btn-secondary btn-publish" th:if="${error == null}">Publish</button>
