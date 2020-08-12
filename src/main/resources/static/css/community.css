@@ -1,8 +1,7 @@
 
 .main {
     margin-top: 50px;
-    margin-left: 100px;
-    margin-right: 100px;
+    width: 70%;
 }
 
 .btn-publish {
@@ -66,4 +65,15 @@
 
 .tags-dashboard {
     margin-top: 25px;
+}
+
+.community-photo {
+    position: absolute;
+    left: 20%;
+    right: 20%;
+}
+
+.community-icon {
+    transition: 0.2s ease;
+    color: #898d92;
 }

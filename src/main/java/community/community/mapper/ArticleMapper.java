@@ -37,4 +37,7 @@ public interface ArticleMapper {
 
     @Select("select * from article where tags regexp #{regex} and id != #{id}")
     List<Article> selectRelated(String regex, Integer id);
+
+    @Delete("delete from article where id = #{id}")
+    void deleteByID(Integer id);
 }

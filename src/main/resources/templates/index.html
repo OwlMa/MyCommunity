@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/community.css">
     <script src="https://code.jquery.com/jquery-3.5.0.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
@@ -25,13 +26,13 @@
             <hr>
 
             <div class="media" th:each="articleDTO : ${Articles}">
-                <img class="rounded-lg" th:src="${articleDTO.user.avatarUrl}" alt="" style="width: 100px; height: 100px">
+                <img class="rounded-lg" th:src="${articleDTO.user.avatarUrl}" alt="" style="width: 85px; height: 85px">
                 <div class="media-body" style="margin-left: 20px">
-                    <h4 class="mt-0">
+                    <h3 class="mt-0">
                         <a th:href="@{'/articles/' + ${articleDTO.id}}" th:text="${articleDTO.title}"></a>
-                    </h4>
-                    <span th:text="${articleDTO.body}"></span><br>
+                    </h3>
                     <span class="text-desc"><span th:text="${articleDTO.commentCount}"></span> comment · <span th:text="${articleDTO.viewCount}"></span> views · <span th:text="${#dates.format(articleDTO.gmtCreate, 'MM-dd-yyyy')}"></span> </span>
+                    <br>
                     <hr>
                 </div>
             </div>
@@ -95,7 +96,37 @@
             </nav>
         </div>
         <div class="col-lg-4 col-mid-12 col-sm-12 col-xs-12">
-            <h3>Trending</h3>
+            <h4>Developer Information</h4>
+            <div class="card" style="width: 20rem;">
+                <img src="/img/deer.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Tianyang Ma</h5>
+                    <p class="card-text">Looking for Software Design Engineer job.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item socials-nav-item"><a href="#" class="community-icon"><span class="fa fa-envelope">&nbsp&nbsp;Contact Me</span></a></li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <a href="#" class="socials-nav-item community-icon"><span class="fa fa-github">  Github</span></a>
+                            </div>
+                            <div class="col-lg-5">
+                                <a href="#" class="socials-nav-item community-icon"><span class="fa fa-linkedin-square">  Linkedin</span></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <a href="#" class="socials-nav-item community-icon"><span class="fa fa-wechat">  WeChat</span></a>
+                            </div>
+                            <div class="col-lg-5">
+                                <a href="#" class="socials-nav-item community-icon"><span class="fa fa-home">  LeetCode</span></a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

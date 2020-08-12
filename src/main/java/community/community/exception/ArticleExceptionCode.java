@@ -1,7 +1,8 @@
 package community.community.exception;
 
 public enum ArticleExceptionCode implements ErrorCode{
-    ARTICLE_NOT_EXIST(2001, "This article dose not exist");
+    ARTICLE_NOT_EXIST(2001, "This article dose not exist"),
+    ARTICLE_CREATOR_NOT_VALID(2002, "The current user does not have the access to delete this article");
 
 
     @Override

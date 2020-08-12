@@ -135,4 +135,15 @@ public class ArticleService {
         List<Article> relatedArticles = articleMapper.selectRelated(sb.toString(), id);
         return relatedArticles;
     }
+
+    public void deleteByID(Integer id, User user) {
+        Article article = articleMapper.getByID(id);
+        if (article == null) {
+            throw new MyException(ArticleExceptionCode.ARTICLE_NOT_EXIST);
+        }
+        if (article.getCreator() != user.getId()) {
+            throw new MyException(ArticleExceptionCode.ARTICLE_CREATOR_NOT_VALID);
+        }
+        articleMapper.deleteByID(id);
+    }
 }

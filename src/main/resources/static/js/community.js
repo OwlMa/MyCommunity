@@ -1,3 +1,25 @@
+function confirmDelete(event) {
+    var check = window.confirm("are you sure to delete this article?");
+    if (!check) return false;
+    var articleId = $("#article_id").val();
+    $.ajax({
+        type: "DELETE",
+        url: "/delete/articles/" + articleId,
+        contentType: 'application/json',
+        success: function (response) {
+            if (response.code == 200) {
+                // $("#comment_block").hide();
+                window.location.href = '/';
+            } else {
+                alert(response.message);
+            }
+            console.log(response);
+        },
+        dataType: "json"
+    });
+
+}
+
 function post() {
     var articleId = $("#article_id").val();
     var content = $("#comment_content").val();
