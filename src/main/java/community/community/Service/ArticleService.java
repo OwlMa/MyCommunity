@@ -1,7 +1,9 @@
 package community.community.Service;
 
 import community.community.dto.ArticleDTO;
+import community.community.dto.CommentDTO;
 import community.community.dto.PageDTO;
+import community.community.enums.CommentTypeEnum;
 import community.community.exception.ArticleExceptionCode;
 import community.community.exception.MyException;
 import community.community.mapper.ArticleMapper;
@@ -24,6 +26,8 @@ public class ArticleService {
     private UserMapper userMapper;
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private CommentService commentService;
     @Autowired
     private TagService tagService;
 
@@ -132,10 +136,19 @@ public class ArticleService {
             sb.append("|");
         }
         sb.deleteCharAt(sb.length()-1);
+        List<Article> result = new LinkedList<>();
         List<Article> relatedArticles = articleMapper.selectRelated(sb.toString(), id);
-        return relatedArticles;
+        int count = 0;
+        for (Article article: relatedArticles) {
+            result.add(article);
+            if (++count >= 5) {
+                break;
+            }
+        }
+        return result;
     }
 
+    @Transactional
     public void deleteByID(Integer id, User user) {
         Article article = articleMapper.getByID(id);
         if (article == null) {
@@ -143,6 +156,11 @@ public class ArticleService {
         }
         if (article.getCreator() != user.getId()) {
             throw new MyException(ArticleExceptionCode.ARTICLE_CREATOR_NOT_VALID);
+        }
+        articleMapper.update(article);
+        List<CommentDTO> commentDTOS= commentService.listById(id, CommentTypeEnum.ARTICLE.getCode());
+        for (CommentDTO commentDTO: commentDTOS) {
+            commentService.deleteByID(commentDTO.getId(), user);
         }
         articleMapper.deleteByID(id);
     }

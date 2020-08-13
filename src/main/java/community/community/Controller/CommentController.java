@@ -53,4 +53,12 @@ public class CommentController {
         List<CommentDTO> commentDTOS = commentService.listById(id, CommentTypeEnum.COMMENT.getCode());
         return ResultDTO.success(commentDTOS);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/delete/comment/{id}", method = RequestMethod.DELETE)
+    public ResultDTO deleteComment(@PathVariable(name = "id") Integer id, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        commentService.deleteByID(id, user);
+        return ResultDTO.success();
+    }
 }

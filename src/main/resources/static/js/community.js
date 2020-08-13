@@ -1,15 +1,32 @@
-function confirmDelete(event) {
-    var check = window.confirm("are you sure to delete this article?");
+function confirmDelete(objectType, event) {
+    var obj = null;
+    var id = 0;
+    if (objectType == 'article') {
+        obj = 'article';
+        id = $("#article_id").val();
+    } else if (objectType == 'comment') {
+        obj = 'comment';
+        id = event.getAttribute("data-id");
+    }
+    else if (objectType == 'sub-comment') {
+        obj = 'sub-comment';
+    }
+    var check = window.confirm("are you sure to delete this " + obj + "?");
     if (!check) return false;
-    var articleId = $("#article_id").val();
+
     $.ajax({
         type: "DELETE",
-        url: "/delete/articles/" + articleId,
+        url: "/delete/" + obj + "/" + id,
         contentType: 'application/json',
         success: function (response) {
             if (response.code == 200) {
                 // $("#comment_block").hide();
-                window.location.href = '/';
+                if (obj == 'article') {
+                    window.location.href = '/';
+                }
+                else if (obj == 'comment') {
+                    window.location.reload();
+                }
             } else {
                 alert(response.message);
             }
@@ -59,10 +76,14 @@ function showComments(e) {
     // comments.addClass("show");
     comments.toggleClass("show");
     if (comments.hasClass("show")) {
-        e.classList.add("active");
         if (comments.children().length == 1) {
             $.getJSON("/comment/" + id, function (data) {
                 console.log(data);
+                if (data.code == 1001) {
+                    window.alert(data.message);
+                    return;
+                }
+                e.classList.add("active");
                 $.each(data.data, function (index,comment) {
                     var img = $("<img/>", {
                         "class": "mr-3 rounded-lg community-img",
@@ -74,7 +95,7 @@ function showComments(e) {
                     var div = $("<div/>", {
                         "class": "col-9"
                     }).append(
-                        $("<h7/>", {
+                        $("<h6/>", {
                             "class":"mt-0",
                             "text":comment.user.name
                         })
@@ -102,7 +123,6 @@ function showComments(e) {
     }
     else {
         e.classList.remove("active");
-        comments.re
     }
 }
 

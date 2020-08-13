@@ -68,9 +68,18 @@
             <div class="col-lg-12 col-mid-12 col-sm-12 col-xs-12" th:if="${section == 'comments'}">
                 <div th:each="message: ${messages}">
                     <div class="media">
-                        <div class="media-body">
+                        <div class="media-body" th:if="${message.type <= 3}">
                             <h5 class="mt-0 mb-1"><span th:class="${message.unread}? 'badge badge-warning' : 'badge badge-light'" th:text="${message.unread}? 'unread' : 'read'">unread</span></h5>
-                            <a th:text="${message.getSenderUser().getName()}"></a><a> replied to your article </a><a th:href="@{'/message/' + ${message.id}}" th:text="${message.article.title}"></a>
+                            <div>
+                                <a th:text="${message.getSenderUser().getName()}"></a><a> replied to your article </a><a th:href="@{'/message/' + ${message.id}}" th:text="${message.article.title}"></a>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="media-body" th:if="${message.type > 3}">
+                            <h5 class="mt-0 mb-1"><span th:class="${message.unread}? 'badge badge-warning' : 'badge badge-light'" th:text="${message.unread}? 'unread' : 'read'">unread</span></h5>
+                            <div>
+                                <a th:text="${message.getSenderUser().getName()}"></a><a> replied to you.</a><a th:if="${message.type == 4}"> But this article has been deleted</a><a th:if="${message.type == 5}"> But this Comment has been deleted</a>
+                            </div>
                             <hr>
                         </div>
                     </div>
@@ -118,5 +127,6 @@
         </div>
     </div>
 </div>
+<div class="community-footer" th:insert="~{footer::foot}"></div>
 </body>
 </html>

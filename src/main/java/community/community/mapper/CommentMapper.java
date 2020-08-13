@@ -1,6 +1,7 @@
 package community.community.mapper;
 
 import community.community.model.Comment;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -19,4 +20,10 @@ public interface CommentMapper {
 
     @Select("select * from comment where parent_id = #{id} and type = #{type}")
     List<Comment> listById(Integer id, Integer type);
+
+    @Delete("delete from comment where parent_id = #{id} and type = #{code}")
+    void deleteByParentIDAndType(Integer id, Integer code);
+
+    @Delete("delete from comment where id = #{id}")
+    void deleteByID(Integer id);
 }

@@ -93,6 +93,24 @@ public class CommentService {
             commentDTO.setGmtModified(System.currentTimeMillis());
             commentDTOS.add(commentDTO);
         }
+        if (type == CommentTypeEnum.ARTICLE.getCode()) {
+            Article article = articleMapper.getByID(id);
+            article.setCommentCount(commentDTOS.size());
+            articleMapper.update(article);
+        }
         return commentDTOS;
+    }
+
+    @Transactional
+    public void deleteByID(Integer id, User user) {
+        Comment comment = commentMapper.selectByID(id);
+        if (comment == null) {
+            throw new MyException(CommentExceptionCode.COMMENT_NOT_FOUND);
+        }
+        if (comment.getCommentator() != user.getId()) {
+            throw new MyException((CommentExceptionCode.COMMENT_INVALID));
+        }
+        commentMapper.deleteByParentIDAndType(id, CommentTypeEnum.COMMENT.getCode());
+        commentMapper.deleteByID(id);
     }
 }

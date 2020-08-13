@@ -39,7 +39,7 @@ public class ArticlesController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/delete/articles/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/article/{id}", method = RequestMethod.DELETE)
     public ResultDTO deleteArticle(@PathVariable(name = "id") Integer id, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         articleService.deleteByID(id, user);

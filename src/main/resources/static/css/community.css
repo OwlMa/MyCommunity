@@ -1,7 +1,9 @@
 
 .main {
-    margin-top: 50px;
+    margin-top: 30px;
     width: 70%;
+    background: whitesmoke;
+    min-height: 1000px;
 }
 
 .btn-publish {
@@ -76,4 +78,44 @@
 .community-icon {
     transition: 0.2s ease;
     color: #898d92;
+}
+
+.community-pagination {
+    margin-top:10px;
+    float: right;
+}
+
+.community-cross {
+    float: right;
+    margin-right: 20%;
+}
+
+.community-card {
+    margin-bottom: 5%;
+}
+
+.community-cardBody {
+    padding-top: 5px;
+    padding-bottom: 0px;
+}
+
+.community-footer {
+    padding: 10px 25%;
+}
+
+.community-foot-text-align {
+    text-align: center;
+}
+
+.body{
+    background-image: url('/img/deer.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat:no-repeat;
+}
+
+.community-container {
+    margin: auto;
+    padding-top: 20px;
+    padding-left: 50px;
 }

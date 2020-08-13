@@ -44,25 +44,46 @@ public class MessageService {
             BeanUtils.copyProperties(message, messageDTO);
             User sender = userMapper.findById(message.getSender());
             messageDTO.setSenderUser(sender);
+
             if (message.getType() == MessageTypeEnum.REPLY_ARTICLE.getStatus()) {
-                //if this message if a comment for an article
+                //if this message is a comment for an article
                 Article article = articleMapper.getByID(message.getOuterId());
+                if (article == null) {
+                    article = ArticleDelete();
+                    messageDTO.setType(MessageTypeEnum.ARTICLE_DELETED.getStatus());
+                }
                 messageDTO.setArticle(article);
             } else if (message.getType() == MessageTypeEnum.REPLY_COMMENT.getStatus()) {
                 //message for secondary comment
                 Comment comment = commentMapper.selectByID(message.getOuterId());
+                if (comment == null) {//this comment has been deleted
+                    comment = new Comment();
+                    comment.setType(CommentTypeEnum.DELETE.getCode());
+                    messageDTO.setType(MessageTypeEnum.COMMENT_DELETED.getStatus());
+                }
                 Article article = null;
                 if (comment.getType() == CommentTypeEnum.ARTICLE.getCode()) {
                     article = articleMapper.getByID(comment.getParentId());
-                } else {
-                    Comment parentComment = commentMapper.selectByID(comment.getParentId());
-                    if (parentComment == null || parentComment.getType() != CommentTypeEnum.ARTICLE.getCode()) {
-                        throw new MyException(CommentExceptionCode.COMMENT_NOT_FOUND);
+                    if (article == null) {
+                        article = ArticleDelete();
+                        messageDTO.setType(MessageTypeEnum.ARTICLE_DELETED.getStatus());
                     }
-                    article = articleMapper.getByID(parentComment.getParentId());
+                } else if (comment.getType() == CommentTypeEnum.COMMENT.getCode()){//reply to the comment
+//                    Comment parentComment = commentMapper.selectByID(comment.getParentId());
+//                    if (parentComment == null || parentComment.getType() != CommentTypeEnum.ARTICLE.getCode()) {
+//                        throw new MyException(CommentExceptionCode.TARGET_MISS);
+//                    } else {
+//                        article = articleMapper.getByID(parentComment.getParentId());
+//                        if (article == null) {
+//                            article = ArticleDelete();
+//                        }
+//                    }
+                } else if (comment.getType() == CommentTypeEnum.DELETE.getCode()) {
+                    article = ArticleDelete();
                 }
                 messageDTO.setArticle(article);
             }
+
             if (message.getStatus() == MessageStatusEnum.UNREAD.getCode()) {
                 messageDTO.setUnread(true);
             } else {
@@ -75,6 +96,12 @@ public class MessageService {
         Integer count = messageMapper.countByReceiver(user.getId());
         pageDTO.setPage(count, page, size);
         return pageDTO;
+    }
+
+    private Article ArticleDelete() {
+        Article article = new Article();
+        article.setTitle("This article has been deleted");
+        return article;
     }
 
     public Integer getUnreadCount(List<MessageDTO> dtoList) {
