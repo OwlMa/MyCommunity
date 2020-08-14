@@ -1,3 +1,13 @@
+function login() {
+    jQuery.i18n.properties({
+        name:'application',
+        path:'resources/',
+        callback: function() {
+            alert(github.client.id);
+        }
+    });
+}
+
 function confirmDelete(objectType, event) {
     var obj = null;
     var id = 0;

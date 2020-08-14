@@ -21,7 +21,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
-                        @RequestParam(name = "size", defaultValue = "6") Integer size) {
+                        @RequestParam(name = "size", defaultValue = "7") Integer size) {
 
         PageDTO<ArticleDTO> pageDTO = articleService.list(page, size);
         model.addAttribute("currPage", pageDTO);

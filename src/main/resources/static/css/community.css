@@ -1,7 +1,7 @@
 
 .main {
     margin-top: 30px;
-    width: 70%;
+    width: 80%;
     background: whitesmoke;
     min-height: 1000px;
 }
@@ -117,5 +117,5 @@
 .community-container {
     margin: auto;
     padding-top: 20px;
-    padding-left: 50px;
+    padding-left: revert;
 }
