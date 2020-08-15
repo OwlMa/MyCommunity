@@ -3,7 +3,7 @@ package community.community.model;
 public class User {
     private Integer id;
     private String name;
-    private String accountId;
+    private Integer accountId;
     private String token;
     private Long gmtCreate;
     private Long gmtModified;
@@ -36,11 +36,11 @@ public class User {
         this.name = name;
     }
 
-    public String getAccountId() {
+    public Integer getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(String accountId) {
+    public void setAccountId(Integer accountId) {
         this.accountId = accountId;
     }
 

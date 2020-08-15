@@ -42,8 +42,6 @@ public class PublishController {
         article.setBody(body);
         article.setTags(tags);
         article.setCreator(user.getId());
-        article.setGmtCreate(System.currentTimeMillis());
-        article.setGmtModified(System.currentTimeMillis());
         article.setId(id);
         articleService.createOrUpdate(article);
         return "redirect:/";

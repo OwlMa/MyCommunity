@@ -1,8 +1,8 @@
 package community.community.dto;
 
 public class GithubUser {
-    private String name;
-    private Long id;
+    private String login;
+    private Integer id;
     private String avatar_url;
 
     public String getAvatar_url() {
@@ -13,19 +13,19 @@ public class GithubUser {
         this.avatar_url = avatar_url;
     }
 
-    public String getName() {
-        return name;
+    public String getLogin() {
+        return login;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

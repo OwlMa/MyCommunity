@@ -54,9 +54,10 @@ public class ProfileController {
         return "profile";
     }
 
-    @GetMapping("/message/{id}")
-    public String message(@PathVariable(name = "id") Integer id) {
+    @GetMapping("/message/{id}/{articleId}")
+    public String message(@PathVariable(name = "id") Integer id,
+                          @PathVariable(name = "articleId") Integer articleId) {
         messageService.setReadById(id);
-        return "redirect:/articles/" + String.valueOf(id);
+        return "redirect:/articles/" + String.valueOf(articleId);
     }
 }

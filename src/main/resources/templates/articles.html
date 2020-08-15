@@ -112,10 +112,17 @@
                 </div>
 <!--                input comment-->
                 <div class="col-lg-10 col-mid-9 col-sm-9 col-xs-9" id="comment_block">
-                    <div th:class="media" style="padding-bottom: 5px">
-                        <img class="mr-6 rounded-lg" th:src="${articles.user.avatarUrl}" alt="" style="width: 50px; height: 50px">
+                    <div th:class="media" style="padding-bottom: 5px" th:if="${session.user == null}">
+                        <img class="mr-6 rounded-lg" src="/img/guest.jpg" alt="" style="width: 50px; height: 50px">
                         <h5 class="mt-0 media-body">
-                            <span th:text="${articles.user.name}"></span>
+                            <span >Guest, please login first!</span>
+                        </h5>
+                        <label style="float: right"><h5>Comments</h5></label>
+                    </div>
+                    <div th:class="media" style="padding-bottom: 5px" th:if="${session.user != null}">
+                        <img class="mr-6 rounded-lg" th:src="${session.user.avatarUrl}" alt="" style="width: 50px; height: 50px">
+                        <h5 class="mt-0 media-body">
+                            <span th:text="${session.user.name}"></span>
                         </h5>
                         <label style="float: right"><h5>Comments</h5></label>
                     </div>

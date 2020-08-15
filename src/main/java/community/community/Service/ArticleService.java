@@ -110,11 +110,17 @@ public class ArticleService {
     @Transactional
     public void createOrUpdate(Article article) {
         if (article.getId() == null) {
+            article.setGmtCreate(System.currentTimeMillis());
+            article.setGmtModified(System.currentTimeMillis());
             articleMapper.create(article);
             Integer id = articleMapper.selectLastInsertId();
             tagService.createOrUpdate(article.getTags(), id);
         }
         else {
+            Article original = articleMapper.getByID(article.getId());
+            article.setCommentCount(original.getCommentCount());
+            article.setViewCount(original.getViewCount());
+            article.setViewCount(original.getLikeCount());
             article.setGmtModified(System.currentTimeMillis());
             articleMapper.update(article);
         }

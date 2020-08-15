@@ -35,10 +35,9 @@ public class CommentController {
         }
         Comment comment = new Comment();
         BeanUtils.copyProperties(commentDTO, comment);
-        comment.setCommentator(8);
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(System.currentTimeMillis());
-        comment.setCommentator(1);
+        comment.setCommentator(user.getId());
         commentService.insert(comment);
         return ResultDTO.success();
     }

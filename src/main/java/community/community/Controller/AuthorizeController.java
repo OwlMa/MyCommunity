@@ -51,10 +51,10 @@ public class AuthorizeController {
         if (githubUser != null) {
             //login successfully
             User user = new User();
-            user.setName(githubUser.getName());
+            user.setName(githubUser.getLogin());
             String token = UUID.randomUUID().toString();
             user.setToken(token);
-            user.setAccountId(String.valueOf(githubUser.getName()));
+            user.setAccountId(githubUser.getId());
             user.setAvatarUrl(githubUser.getAvatar_url());
             userService.createOrUpdate(user);
             //userMapper.insert(user);
@@ -70,6 +70,9 @@ public class AuthorizeController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,
                          HttpServletResponse response) {
+        User user = (User) request.getSession().getAttribute("user");
+        user.setToken(null);
+        userService.createOrUpdate(user);
         request.getSession().removeAttribute("user");
         Cookie cookie = new Cookie("token", null);
         cookie.setMaxAge(0);

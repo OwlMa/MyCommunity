@@ -70,8 +70,11 @@
                     <div class="media">
                         <div class="media-body" th:if="${message.type <= 3}">
                             <h5 class="mt-0 mb-1"><span th:class="${message.unread}? 'badge badge-warning' : 'badge badge-light'" th:text="${message.unread}? 'unread' : 'read'">unread</span></h5>
-                            <div>
-                                <a th:text="${message.getSenderUser().getName()}"></a><a> replied to your article </a><a th:href="@{'/message/' + ${message.id}}" th:text="${message.article.title}"></a>
+                            <div th:if="${message.type == 2}">
+                                <a th:text="${message.getSenderUser().getName()}"></a><a> replied to your article </a><a th:href="@{'/message/' + ${message.id} + '/' + ${message.article.id}}" th:text="${message.article.title}"></a>
+                            </div>
+                            <div th:if="${message.type == 3}">
+                                <a th:text="${message.getSenderUser().getName()}"></a><a> replied to your comment under the article </a><a th:href="@{'/message/' + ${message.id} + '/' + ${message.article.id}}" th:text="${message.article.title}"></a>
                             </div>
                             <hr>
                         </div>
