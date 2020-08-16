@@ -82,6 +82,12 @@ public class ArticleService {
                 continue;
             }
             Article article = articleMapper.getByID(articleID);
+            if (article == null) {
+                //if this article has been deleted, delete the article in the tags
+                tagService.deleteByArticleID(id, articleID);
+                countArticles--;
+                continue;
+            }
             ArticleDTO articleDTO = new ArticleDTO();
             BeanUtils.copyProperties(article, articleDTO);
             User user = userMapper.findById(article.getCreator());
@@ -164,6 +170,7 @@ public class ArticleService {
             throw new MyException(ArticleExceptionCode.ARTICLE_CREATOR_NOT_VALID);
         }
         articleMapper.update(article);
+        //delete the comments
         List<CommentDTO> commentDTOS= commentService.listById(id, CommentTypeEnum.ARTICLE.getCode());
         for (CommentDTO commentDTO: commentDTOS) {
             commentService.deleteByID(commentDTO.getId(), user);

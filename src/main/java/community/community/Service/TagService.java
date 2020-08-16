@@ -113,4 +113,19 @@ public class TagService {
         Tag tag = tagMapper.getByTagId(id);
         return tag.getName();
     }
+
+    /**
+     * delete the article in the specific tags
+     * @param tagID, articleID
+     * @param articleID
+     */
+    public void deleteByArticleID(Integer tagID, Integer articleID) {
+        Tag tag = tagMapper.getByTagId(tagID);
+        byte[] bytes = tag.getStream();
+        BitSet bitSet = BitSet.valueOf(bytes);
+        bitSet.set(articleID, false);
+        bytes = bitSet.toByteArray();
+        tag.setStream(bytes);
+        tagMapper.update(tag);
+    }
 }
