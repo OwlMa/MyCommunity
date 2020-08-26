@@ -17,8 +17,5 @@ public class WebConfig implements WebMvcConfigurer{
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(sessionInterceptor).addPathPatterns("/**");
     }
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/image/**").addResourceLocations("file:" + "F:/code/java/Mycommunity/src/main/resources/static/img");
-//    }
+
 }

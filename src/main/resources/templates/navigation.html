@@ -21,7 +21,18 @@
                     <a class="nav-link" href="/publish">Publish <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item" th:if="${session.user==null}">
-                    <a class="nav-link" href="https://github.com/login/oauth/authorize?client_id=1925142f4c54181de70e&redirect_uri=http://192.168.4.46:8080/callback&scope=user&state=ssss">Login</a>
+                    <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="login">Login</a>
+                        <div class="dropdown-menu" aria-labelledby="login">
+                            <div style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Special Notice</h5>
+                                    <p class="card-text">Currently, we only support login with the Github</p>
+                                    <a href="/login/oauth" class="btn btn-primary">Login With Github</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item dropdown" th:if="${session.user!=null}">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}">

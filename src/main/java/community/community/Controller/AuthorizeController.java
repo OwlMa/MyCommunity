@@ -36,6 +36,14 @@ public class AuthorizeController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/login/oauth")
+    public String login() {
+        String address = "https://github.com/login/oauth/authorize?client_id=" + client_id
+                + "&redirect_uri=" + redirect_uri + "&scope=user&state=ssss";
+//        githubProvider.sendRequest(address);
+        return "redirect:" + address;
+    }
+
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
@@ -63,8 +71,8 @@ public class AuthorizeController {
         }
         else {
             //login failed
+            return "/error";
         }
-        return "index";
     }
 
     @GetMapping("/logout")

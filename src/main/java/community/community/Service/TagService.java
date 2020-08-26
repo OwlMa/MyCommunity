@@ -32,12 +32,6 @@ public class TagService {
                 Tag oldTag = tagMapper.selectByName(t);
                 byte[] bytes = oldTag.getStream();
                 BitSet bitSet = BitSet.valueOf(bytes);
-//                int index = 0;
-//                for (int i = 0; i < bytes.length; i++) {
-//                    for (int j = 7; j >= 0; j--) {
-//                        bitSet.set(index++, (bytes[i] & (1 << j)) >> j == 1 ? true : false);
-//                    }
-//                }
                 bitSet.set(ArticleId);
                 bytes = bitSet.toByteArray();
                 oldTag.setStream(bytes);
@@ -74,17 +68,6 @@ public class TagService {
             }
             index++;
         }
-//        for (int i = 0; i < bytes.length; i++) {
-//            for (int j = 7; j >= 0; j--) {
-//                if (((bytes[i] & (1 << j)) >> j) == 1) {
-//                    bitSet.set(index, true);
-//                    list.add(index++);
-//                }
-//                else {
-//                    bitSet.set(index++, false);
-//                }
-//            }
-//        }
 
         return list;
     }

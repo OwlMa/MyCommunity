@@ -1,5 +1,6 @@
 package community.community.Controller;
 
+import community.community.Provider.AWSProvider;
 import community.community.Service.ArticleService;
 import community.community.dto.ArticleDTO;
 import community.community.model.Article;
@@ -20,6 +21,9 @@ public class PublishController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private AWSProvider awsProvider;
+
     @GetMapping("/publish")
     public String publish() {
         return "publish";
@@ -39,7 +43,8 @@ public class PublishController {
         }
         Article article = new Article();
         article.setTitle(title);
-        article.setBody(body);
+        String objectKey = awsProvider.generateArticleAndUpload(body, title);
+        article.setBody("AWS?" + objectKey);
         article.setTags(tags);
         article.setCreator(user.getId());
         article.setId(id);
