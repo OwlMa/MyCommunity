@@ -17,9 +17,6 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/tags">Tags</a>
                 </li>
-                <li class="nav-item active" th:if="${session.user!=null}">
-                    <a class="nav-link" href="/publish">Publish <span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item" th:if="${session.user==null}">
                     <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="login">Login</a>
@@ -41,7 +38,7 @@
                         <a class="dropdown-item" href="/profile/articles">Profile</a>
                         <a class="dropdown-item" href="#">Account</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/logout">Log Out</a>
+                        <a class="dropdown-item" href="/logout/oauth">Log Out</a>
                     </div>
                 </li>
                 <li class="nav-item active" th:if="${session.user!=null}"><a class="nav-link" href="/profile/comments">Unread <span class="badge badge-light" th:text="${session.unreadCount}">9</span></a></li>

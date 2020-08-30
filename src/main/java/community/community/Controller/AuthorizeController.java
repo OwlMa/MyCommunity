@@ -75,7 +75,7 @@ public class AuthorizeController {
         }
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/logout/oauth")
     public String logout(HttpServletRequest request,
                          HttpServletResponse response) {
         User user = (User) request.getSession().getAttribute("user");

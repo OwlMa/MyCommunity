@@ -74,6 +74,12 @@ public class CommentService {
         messageMapper.insert(message);
     }
 
+    /**
+     * list the comment by its parent_id and its type
+     * @param id
+     * @param type
+     * @return
+     */
     public List<CommentDTO> listById(Integer id, Integer type) {
         List<CommentDTO> commentDTOS = new LinkedList<>();
         List<Comment> comments = commentMapper.listById(id, type);
@@ -89,6 +95,8 @@ public class CommentService {
             }
             CommentDTO commentDTO = new CommentDTO();
             BeanUtils.copyProperties(comment,commentDTO);
+            Integer commentCount = commentMapper.listById(comment.getId(), CommentTypeEnum.COMMENT.getCode()).size();
+            commentDTO.setCommentCount(commentCount);
             commentDTO.setUser(user);
             commentDTO.setGmtModified(System.currentTimeMillis());
             commentDTOS.add(commentDTO);
