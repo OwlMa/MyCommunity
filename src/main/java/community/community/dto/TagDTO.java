@@ -1,5 +1,7 @@
 package community.community.dto;
 
+import java.util.Scanner;
+
 public class TagDTO {
     private Integer id;
     private String name;

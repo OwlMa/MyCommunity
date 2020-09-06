@@ -1,41 +1,48 @@
 create table user
 (
-	id int auto_increment,
-	account_id varchar(100) null,
-	name varchar(50) null,
-	token char(36) null,
-	gmt_create bigint null,
-	gmt_modified bigint null,
-	constraint user_pk
-		primary key (id)
-);
+    id           int auto_increment
+        primary key,
+    account_id   int          null,
+    name         varchar(50)  null,
+    token        char(36)     null,
+    gmt_create   bigint       null,
+    gmt_modified bigint       null,
+    avatar_url   varchar(256) null,
+    constraint user_account_id_uindex
+        unique (account_id)
+)default character set utf8;
 
-create table article
+create table tags
 (
-	id int auto_increment,
-	title varchar(50) null,
-	body text null,
-	gmt_create bigint null,
-	gmt_modified bigint null,
-	creator int null,
-	comment_count int default 0 null,
-	view_count int default 0 null,
-	like_count int default 0 null,
-	tags varchar(256) null,
-	constraint article_pk
-		primary key (id)
-);
+    id     int auto_increment
+        primary key,
+    name   varchar(20) null,
+    stream binary(127) null,
+    constraint tags_name_uindex
+        unique (name)
+)default character set utf8;
 
 create table comment
 (
-	id bigint auto_increment,
-	parent_id bigint not null,
-	type int not null,
-	content varchar(256) not null,
-	commentator int not null,
-	gmt_create bigint not null,
-	gmt_modified bigint not null,
-	like_count int default 0 null,
-	constraint comment_pk
-		primary key (id)
-);
+    id           int auto_increment
+        primary key,
+    parent_id    int           not null,
+    type         int           not null,
+    content      varchar(256)  not null,
+    commentator  int           not null,
+    gmt_create   bigint        not null,
+    gmt_modified bigint        not null,
+    like_count   int default 0 null
+)default character set utf8;
+
+create table message
+(
+    id         int auto_increment
+        primary key,
+    sender     int    null,
+    receiver   int    null,
+    outer_id   int    null,
+    type       int    null,
+    gmt_create bigint null,
+    status     int    null comment 'read or unread'
+)default character set utf8;
