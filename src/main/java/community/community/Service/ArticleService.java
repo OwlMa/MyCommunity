@@ -11,12 +11,15 @@ import community.community.mapper.ArticleMapper;
 import community.community.mapper.UserMapper;
 import community.community.model.Article;
 import community.community.model.User;
+import community.community.redis.RedisProvider;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.cert.CollectionCertStoreParameters;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,6 +36,8 @@ public class ArticleService {
     private TagService tagService;
     @Autowired
     private AWSProvider awsProvider;
+    @Autowired
+    private RedisProvider redisProvider;
 
     public PageDTO<ArticleDTO> list(Integer page, Integer size) {
         Integer offset = size * (page - 1);
@@ -46,6 +51,7 @@ public class ArticleService {
             articleDTO.setUser(user);
             articleDTOList.add(articleDTO);
         }
+        Collections.reverse(articleDTOList);
         pageDTO.setDTOList(articleDTOList);
         Integer count  = articleMapper.count();
         pageDTO.setPage(count, page, size);
@@ -111,6 +117,22 @@ public class ArticleService {
         return pageDTO;
     }
 
+    /**
+     * find the article from the redis;
+     * if absent, find the article from database;
+     * @param id
+     * @return
+     */
+    public ArticleDTO getArticleDTOFromRedis(Integer id) {
+        Article article = redisProvider.getArticle(id);
+        if (article == null) {
+            return getArticleDTOByID(id);
+        }
+        ArticleDTO articleDTO = new ArticleDTO();
+        BeanUtils.copyProperties(article, articleDTO);
+        User user = new User();
+        return articleDTO;
+    }
 
     public ArticleDTO getArticleDTOByID(Integer id) {
         Article article = articleMapper.getByID(id);
@@ -151,6 +173,14 @@ public class ArticleService {
             articleMapper.create(article);
             Integer id = articleMapper.selectLastInsertId();
             tagService.createOrUpdate(article.getTags(), id);
+            //add redis a new article list below
+            new Runnable() {
+                @Override
+                public void run() {
+                    redisProvider.createRedisArticle(article);
+                }
+            }.run();
+
         }
         else {
             Article original = articleMapper.getByID(article.getId());
